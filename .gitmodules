@@ -1,3 +1,6 @@
 [submodule "leveldb/src/main/cpp/leveldb-mcpe"]
 	path = leveldb/src/main/cpp/leveldb-mcpe
-	url = https://github.com/Mojang/leveldb-mcpe.git
+	url = https://github.com/Amulet-Team/leveldb-mcpe.git
+[submodule "scripts/texturesrc"]
+	path = scripts/texturesrc
+	url = https://github.com/Mojang/bedrock-samples

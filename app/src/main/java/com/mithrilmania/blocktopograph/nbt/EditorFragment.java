@@ -751,8 +751,7 @@ public class EditorFragment extends Fragment {
             TextView tagName = tagView.findViewById(R.id.tag_name);
             tagName.setText(tag.getName());
 
-            switch (layoutID) {
-                case R.layout.tag_boolean_layout: {
+            if (layoutID== R.layout.tag_boolean_layout) {
                     final CheckBox checkBox = tagView.findViewById(R.id.checkBox);
                     final ByteTag byteTag = (ByteTag) tag;
                     checkBox.setChecked(byteTag.getValue() == (byte) 1);
@@ -769,9 +768,7 @@ public class EditorFragment extends Fragment {
                             nbt.setModified();
                         }
                     });
-                    break;
-                }
-                case R.layout.tag_byte_layout: {
+                }else if (layoutID == R.layout.tag_byte_layout) {
                     final EditText editText = tagView.findViewById(R.id.byteField);
                     final ByteTag byteTag = (ByteTag) tag;
                     //parse the byte as an unsigned byte
@@ -799,9 +796,7 @@ public class EditorFragment extends Fragment {
                             }
                         }
                     });
-                    break;
-                }
-                case R.layout.tag_short_layout: {
+                }else if (layoutID == R.layout.tag_short_layout) {
                     final EditText editText = tagView.findViewById(R.id.shortField);
                     final ShortTag shortTag = (ShortTag) tag;
                     editText.setText(shortTag.getValue().toString());
@@ -825,9 +820,7 @@ public class EditorFragment extends Fragment {
                             }
                         }
                     });
-                    break;
-                }
-                case R.layout.tag_int_layout: {
+                }else if (layoutID == R.layout.tag_int_layout) {
                     final EditText editText = tagView.findViewById(R.id.intField);
                     final IntTag intTag = (IntTag) tag;
                     editText.setText(intTag.getValue().toString());
@@ -851,9 +844,7 @@ public class EditorFragment extends Fragment {
                             }
                         }
                     });
-                    break;
-                }
-                case R.layout.tag_long_layout: {
+                }else if (layoutID == R.layout.tag_long_layout) {
                     final EditText editText = tagView.findViewById(R.id.longField);
                     final LongTag longTag = (LongTag) tag;
                     editText.setText(longTag.getValue().toString());
@@ -877,9 +868,7 @@ public class EditorFragment extends Fragment {
                             }
                         }
                     });
-                    break;
-                }
-                case R.layout.tag_float_layout: {
+                }else if (layoutID == R.layout.tag_float_layout) {
                     final EditText editText = tagView.findViewById(R.id.floatField);
                     final FloatTag floatTag = (FloatTag) tag;
                     editText.setText(floatTag.getValue().toString());
@@ -903,9 +892,7 @@ public class EditorFragment extends Fragment {
                             }
                         }
                     });
-                    break;
-                }
-                case R.layout.tag_double_layout: {
+                }else if (layoutID == R.layout.tag_double_layout) {
                     final EditText editText = tagView.findViewById(R.id.doubleField);
                     final DoubleTag doubleTag = (DoubleTag) tag;
                     editText.setText(doubleTag.getValue().toString());
@@ -929,9 +916,7 @@ public class EditorFragment extends Fragment {
                             }
                         }
                     });
-                    break;
-                }
-                case R.layout.tag_string_layout: {
+                }else if (layoutID == R.layout.tag_string_layout) {
                     final EditText editText = tagView.findViewById(R.id.stringField);
                     final StringTag stringTag = (StringTag) tag;
                     editText.setText(stringTag.getValue());
@@ -950,12 +935,9 @@ public class EditorFragment extends Fragment {
                             stringTag.setValue(s.toString());
                         }
                     });
-                    break;
-                }
-                default:
-                    break;
+                }else{throw new RuntimeException();}
 
-            }
+
 
             return tagView;
         }

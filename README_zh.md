@@ -1,15 +1,15 @@
-<h1 align="center">Blocktopograph</h1>
+<div align="center">
+<h1>Blocktopograph</h1>
 
-<p align="center">
- <a href="README.md"><img src="https://img.shields.io/badge/翻译-English-blue?logo=googletranslate&logoColor=white" alt="Translate"></a>
- <a href="https://discord.gg/3FYYfdYUBE"><img src="https://img.shields.io/badge/-聊天-5865F2?logo=discord&logoColor=white" alt="Discord"></a>
-<a href="https://github.com/rukiroki/blocktopograph/releases/latest"><img src="https://img.shields.io/github/downloads/rukiroki/blocktopograph/total" alt="下载"></a>
+<p>
+<a href="README.md"><img src="https://img.shields.io/badge/%E7%BF%BB%E8%AF%91-English-blue?logo=googletranslate&logoColor=white" alt="Translate"></a>
+<a href="https://github.com/ezmeo/blocktopograph/releases/latest"><img src="https://img.shields.io/badge/%E4%B8%8B%E8%BD%BD-Releases-green?Logo=github" alt="下载"></a>
 </p>
+
+</div>
 
 由 *Proto Lambda*（链接已移除，应其要求）、[@MithrilMania](https://github.com/MithrilMania)、
 [@flagmaggot](https://github.com/flagmaggot)、[@oO0oO0oO0o0o00](https://github.com/oO0oO0oO0o0o00)、[@rukiroki](https://github.com/rukiroki) 以及众多社区贡献者（包括翻译工作）共同开发。
-
-此分支是目前唯一支持 **MCPE 1.26.30+** 的版本。
 
 ## 介绍
 本应用是一个Android端的Minecraft基岩版存档编辑器。
@@ -25,7 +25,8 @@
 
 ## 路线图
 - [x] 完全恢复原始功能，兼容最新版本。
-- [x] 添加实体、方块实体和方块列表，支持至最新版本（1.26.30）。
+- [ ] 添加实体、方块实体和方块列表，支持至最新版本（26.7x）。
+- [ ] 把硬编码在 Java 枚举里的实体、方块实体和方块列表剥离出来。
 - [x] 为大部分资源提供多语言支持。
 - [ ] 为更多资源提供多语言支持。
 - [x] 修复一些遗留 Bug。
@@ -51,7 +52,7 @@
 - [ ] 将任意选定区域导出为结构文件。
 - [ ] 将卫星地图导出为 HTML。
 - [x] 添加新版游戏存档的存储路径，以便在某些设备上可以直接读取和编辑存档，无需手动复制到旧版游戏的存储目录。
-- [ ] 支持"Shizuku"以在更广泛的 Android 版本上读取世界存档。
+- [ ] 支持 Shizuku 以在更广泛的 Android 版本上读取世界存档。
 - [ ] UI 预览容器中的物品。
 - [ ] 添加卫星方块地图纹理支持。
 - [ ] 卫星地图正交 3D 视图。
@@ -60,7 +61,7 @@
 - [x] 屏幕（地图）截图功能。
 
 ## 下载
-[>>> 在 GitHub Release 上下载 <<<](https://github.com/rukiroki/blocktopograph/releases/latest)
+[>>> 在 GitHub Release 上下载 <<<](https://github.com/ezmeo/blocktopograph/releases/latest)
 
 ## 图库
 ### 主世界卫星地图
@@ -81,7 +82,7 @@
 
 ## 许可证
 
-许可证：**AGPL v.3**
+许可证：**AGPL v3**
 
 直接后果：所有公开发布的源代码修改都必须公开，包括其源代码。
 
@@ -105,11 +106,11 @@
     如果没有，请参阅 <http://www.gnu.org/licenses/>。
 
 ## 支持
-如需支持，请提交 [GitHub Issue](https://github.com/rukiroki/blocktopograph/issues/new)。
+如需支持，请提交 [GitHub Issue](https://github.com/ezmeo/blocktopograph/issues/new)。
 我们欢迎 Bug 报告、功能请求以及关于使用 Blocktopograph 的问题。
 
 ## 贡献
 
 随时欢迎！欢迎为语言支持做出贡献。
 
-[帮助改进翻译](https://github.com/oO0oO0oO0o0o00/blocktopograph/blob/master/translation.md)。
+[帮助改进翻译](translation.md)。

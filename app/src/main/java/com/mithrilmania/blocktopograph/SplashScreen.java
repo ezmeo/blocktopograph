@@ -30,16 +30,16 @@ public class SplashScreen extends AppCompatActivity {
         //4. Done! Some quick brand-awareness.
 
         // Hey proto where did you copy these shit from...
-        // Why did you went through 3rd party outdated Android tutorial
-        // instead the official one.........
+        // Why did you go through 3rd party outdated Android tutorial
+        // instead of the official one.........
 
-        //Comment: yes, splash-screens are against Material-design android guide-lines,
+        // Comment: yes, splash-screens are against Material-design android guide-lines,
         // but brand-awareness is important. And it is a very quick splash (just 1 sec!)
         ImageView brandLogoView = this.findViewById(R.id.brandLogo);
 
         /*
          * Showing splash screen with a timer. This will be useful when you
-         * want to show case your app logo / company
+         * want to showcase your app logo / company
          */
         new Handler().postDelayed(() -> {
             // This method will be executed once the timer is over
@@ -62,7 +62,7 @@ public class SplashScreen extends AppCompatActivity {
             // set image to ImageView
             brandLogoView.setImageDrawable(d);
         } catch (IOException ex) {
-            //fail, but xml has app icon as backup logo (lower resolution, from #1)
+            //fail, but XML has app icon as backup logo (lower resolution, from #1)
         }
     }
 

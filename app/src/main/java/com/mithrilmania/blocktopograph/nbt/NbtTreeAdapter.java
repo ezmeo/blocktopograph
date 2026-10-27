@@ -260,25 +260,24 @@ public class NbtTreeAdapter extends RecyclerView.Adapter<NbtTreeAdapter.ViewHold
 
         @SuppressLint("SetTextI18n")
         private void bindValueEditor(Tag tag) {
-            switch (layoutId) {
-                case R.layout.tag_boolean_layout: {
-                    CheckBox checkBox = itemView.findViewById(R.id.checkBox);
-                    final ByteTag byteTag = (ByteTag) tag;
+            if (layoutId == R.layout.tag_boolean_layout) {
+                CheckBox checkBox = itemView.findViewById(R.id.checkBox);
+                final ByteTag byteTag = (ByteTag) tag;
 
-                    if (currentCheckedListener != null) {
-                        checkBox.setOnCheckedChangeListener(null);
-                    }
-
-                    checkBox.setChecked(byteTag.getValue() == (byte) 1);
-
-                    currentCheckedListener = (buttonView, isChecked) -> {
-                        byteTag.setValue(isChecked ? (byte) 1 : (byte) 0);
-                        markModified();
-                    };
-                    checkBox.setOnCheckedChangeListener(currentCheckedListener);
-                    break;
+                if (currentCheckedListener != null) {
+                    checkBox.setOnCheckedChangeListener(null);
                 }
-                case R.layout.tag_byte_layout: {
+
+                checkBox.setChecked(byteTag.getValue() == (byte) 1);
+
+                currentCheckedListener = (buttonView, isChecked) -> {
+                    byteTag.setValue(isChecked ? (byte) 1 : (byte) 0);
+                    markModified();
+                };
+
+                checkBox.setOnCheckedChangeListener(currentCheckedListener);
+            }
+            else if (layoutId == R.layout.tag_byte_layout) {
                     EditText editText = itemView.findViewById(R.id.byteField);
                     final ByteTag byteTag = (ByteTag) tag;
 
@@ -306,9 +305,8 @@ public class NbtTreeAdapter extends RecyclerView.Adapter<NbtTreeAdapter.ViewHold
                         }
                     };
                     editText.addTextChangedListener(currentTextWatcher);
-                    break;
                 }
-                case R.layout.tag_short_layout: {
+            else if (layoutId == R.layout.tag_short_layout) {
                     EditText editText = itemView.findViewById(R.id.shortField);
                     final ShortTag shortTag = (ShortTag) tag;
 
@@ -333,9 +331,8 @@ public class NbtTreeAdapter extends RecyclerView.Adapter<NbtTreeAdapter.ViewHold
                         }
                     };
                     editText.addTextChangedListener(currentTextWatcher);
-                    break;
                 }
-                case R.layout.tag_int_layout: {
+            else if (layoutId == R.layout.tag_int_layout) {
                     EditText editText = itemView.findViewById(R.id.intField);
                     final IntTag intTag = (IntTag) tag;
 
@@ -360,9 +357,8 @@ public class NbtTreeAdapter extends RecyclerView.Adapter<NbtTreeAdapter.ViewHold
                         }
                     };
                     editText.addTextChangedListener(currentTextWatcher);
-                    break;
                 }
-                case R.layout.tag_long_layout: {
+            else if (layoutId == R.layout.tag_long_layout) {
                     EditText editText = itemView.findViewById(R.id.longField);
                     final LongTag longTag = (LongTag) tag;
 
@@ -387,9 +383,8 @@ public class NbtTreeAdapter extends RecyclerView.Adapter<NbtTreeAdapter.ViewHold
                         }
                     };
                     editText.addTextChangedListener(currentTextWatcher);
-                    break;
                 }
-                case R.layout.tag_float_layout: {
+            else if (layoutId == R.layout.tag_float_layout) {
                     EditText editText = itemView.findViewById(R.id.floatField);
                     final FloatTag floatTag = (FloatTag) tag;
 
@@ -414,9 +409,8 @@ public class NbtTreeAdapter extends RecyclerView.Adapter<NbtTreeAdapter.ViewHold
                         }
                     };
                     editText.addTextChangedListener(currentTextWatcher);
-                    break;
                 }
-                case R.layout.tag_double_layout: {
+            else if (layoutId == R.layout.tag_double_layout) {
                     EditText editText = itemView.findViewById(R.id.doubleField);
                     final DoubleTag doubleTag = (DoubleTag) tag;
 
@@ -441,9 +435,8 @@ public class NbtTreeAdapter extends RecyclerView.Adapter<NbtTreeAdapter.ViewHold
                         }
                     };
                     editText.addTextChangedListener(currentTextWatcher);
-                    break;
                 }
-                case R.layout.tag_string_layout: {
+            else if (layoutId == R.layout.tag_string_layout) {
                     EditText editText = itemView.findViewById(R.id.stringField);
                     final StringTag stringTag = (StringTag) tag;
 
@@ -463,20 +456,17 @@ public class NbtTreeAdapter extends RecyclerView.Adapter<NbtTreeAdapter.ViewHold
                         }
                     };
                     editText.addTextChangedListener(currentTextWatcher);
-                    break;
                 }
-                case R.layout.tag_compound_layout:
-                case R.layout.tag_list_layout: {
+            else if (layoutId == R.layout.tag_compound_layout || layoutId == R.layout.tag_list_layout) {
                     List<Tag> children = currentNode.getChildren();
                     TextView tagName = itemView.findViewById(R.id.tag_name);
                     if (tagName != null) {
                         String name = currentNode.self.getName();
                         tagName.setText(name + " (" + children.size() + " items)");
                     }
-                    break;
                 }
             }
-        }
+
 
         private void markModified() {
             nbt.setModified();

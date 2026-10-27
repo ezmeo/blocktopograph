@@ -65,7 +65,7 @@ public class WorldBackups {
         File cfg = getConfigFile();
         if (!cfg.isFile()) return;
         try {
-            JSONObject obj = new JSONObject(FileUtils.readFileToString(cfg));
+            JSONObject obj = new JSONObject(FileUtils.readFileToString(cfg,"UTF-8"));
             autoBackup = obj.getBoolean(AUTO_BACKUP);
             autoDelete = obj.getBoolean(AUTO_DELETE);
         } catch (Exception e) {
@@ -94,7 +94,7 @@ public class WorldBackups {
             JSONObject obj = new JSONObject();
             obj.put(AUTO_BACKUP, autoBackup);
             obj.put(AUTO_DELETE, autoDelete);
-            FileUtils.writeStringToFile(getConfigFile(), obj.toString(4));
+            FileUtils.writeStringToFile(getConfigFile(), obj.toString(4),"UTF-8");
         } catch (Exception e) {
             Log.d(this, e);
         }
@@ -106,7 +106,7 @@ public class WorldBackups {
         File file = new File(dir, "readme.txt");
         if (file.exists()) return;
         try {
-            FileUtils.writeStringToFile(file, readMe);
+            FileUtils.writeStringToFile(file, readMe,"UTF-8");
         } catch (IOException e) {
             Log.d(this, e);
         }

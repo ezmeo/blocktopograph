@@ -242,7 +242,7 @@
     <string name="block_underwater_torch">水下火把</string>
     <string name="block_chorus_plant">紫颂植株</string>
     <string name="block_white_stained_glass">白色染色玻璃</string>
-    <string name="block_camera">摄像机 [注 1]</string>
+    <string name="block_camera">摄像机</string>
     <string name="block_podzol">灰化土</string>
     <string name="block_beetroot">甜菜根</string>
     <string name="block_stonecutter">切石机（旧版）</string>
@@ -555,7 +555,7 @@
     <string name="block_chiseled_nether_bricks">雕纹下界砖块</string>
     <string name="block_cracked_nether_bricks">裂纹下界砖块</string>
     <string name="block_quartz_bricks">石英砖</string>
-    <string name="block_unknown">未知 [注 3]</string>
+    <string name="block_unknown">未知</string>
     <string name="block_powder_snow">细雪</string>
     <string name="block_sculk_sensor">幽匿感测体</string>
     <string name="block_pointed_dripstone">滴水石锥</string>

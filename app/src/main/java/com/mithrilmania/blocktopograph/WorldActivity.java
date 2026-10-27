@@ -369,201 +369,119 @@ public class WorldActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
+        // 为什么要逼着用if-else不用switch-case
         Log.d(this, "World activity nav-drawer menu item selected: " + id);
-
-
         final DrawerLayout drawer = mBinding.drawerLayout;
         assert drawer != null;
+        // if (id == R.id.nav_world_show_map) {changeContentFragment(this::openWorldMap);}
+        // else if (id == R.id.nav_world_select) {
+        //     //close activity; back to world selection screen
+        //     closeWorldActivity();
+        // }
+        if (id == R.id.nav_singleplayer_nbt) {openPlayerEditor();}
+        else if (id == R.id.nav_multiplayer_nbt) {
+        //  openMultiplayerEditor();
+            searchKey(World.SpecialDBEntryType.MULTIPLAYER.keyBytes);
+        } else //if (id == R.id.nav_inventory) {
+            // TODO go to inventory editor
+            // This feature is planned, but not yet implemented,
+            // use the generic NBT editor for now... } else
+        if (id == R.id.nav_world_nbt) {openLevelEditor();}
+        else //if (id == R.id.nav_tools) {
+            // TODO open tools menu (world downloader/importer/exporter maybe?)
+            //  } else
+        if (id == R.id.nav_overworld_satellite) {changeMapType(MapType.OVERWORLD_SATELLITE, Dimension.OVERWORLD);}
+        else if (id == R.id.nav_overworld_cave) {changeMapType(MapType.OVERWORLD_CAVE, Dimension.OVERWORLD);}
+        else if (id == R.id.nav_overworld_slime_chunk) {changeMapType(MapType.OVERWORLD_SLIME_CHUNK, Dimension.OVERWORLD);}
+        else //if (id == R.id.nav_overworld_debug) {
+            //     changeMapType(MapType.DEBUG); //for debugging tiles positions, rendering, etc.
+            // } else
+        if (id == R.id.nav_overworld_heightmap) {changeMapType(MapType.OVERWORLD_HEIGHTMAP, Dimension.OVERWORLD);}
+        else if (id == R.id.nav_overworld_biome) {changeMapType(MapType.OVERWORLD_BIOME, Dimension.OVERWORLD);}
+        else if (id == R.id.nav_overworld_grass) {changeMapType(MapType.OVERWORLD_GRASS, Dimension.OVERWORLD);}
+        else if (id == R.id.nav_overworld_xray) {changeMapType(MapType.OVERWORLD_XRAY, Dimension.OVERWORLD);}
+        else if (id == R.id.nav_overworld_block_light) {changeMapType(MapType.OVERWORLD_BLOCK_LIGHT, Dimension.OVERWORLD);}
+        else if (id == R.id.nav_nether_map) {changeMapType(MapType.NETHER, Dimension.NETHER);}
+        else if (id == R.id.nav_nether_xray) {changeMapType(MapType.NETHER_XRAY, Dimension.NETHER);}
+        else if (id == R.id.nav_nether_block_light) {changeMapType(MapType.NETHER_BLOCK_LIGHT, Dimension.NETHER);}
+        else if (id == R.id.nav_nether_biome) {changeMapType(MapType.NETHER_BIOME, Dimension.NETHER);}
+        else if (id == R.id.nav_end_satellite) {changeMapType(MapType.END_SATELLITE, Dimension.END);}
+        else if (id == R.id.nav_end_heightmap) {changeMapType(MapType.END_HEIGHTMAP, Dimension.END);}
+        else //if (id == R.id.nav_end_biome) {changeMapType(MapType.END_BIOME, Dimension.END);} else
+        if (id == R.id.nav_end_block_light) {changeMapType(MapType.END_BLOCK_LIGHT, Dimension.END);}
+        else if (id == R.id.nav_map_opt_toggle_grid) {
+            //toggle the grid
+            this.showGrid = !this.showGrid;
+            //rerender tiles (tiles will render with toggled grid on it now)
+            if (this.mapFragment != null) this.mapFragment.resetTileView();
+        } else if (id == R.id.nav_map_opt_filter_entity_markers) {
+            //toggle the grid entity
+            this.mapFragment.openEntityMarkerFilter();
+        } else if (id == R.id.nav_map_opt_filter_tile_entity_markers) {
+            //toggle the grid tile entity
+            this.mapFragment.openTileEntityMarkerFilter();
+        } else if (id == R.id.nav_map_opt_toggle_entity_markers) {
+            //toggle markers;
+            showEntityMarkers = !showEntityMarkers;
+            if (showEntityMarkers) {
+                Snackbar.make(mBinding.getRoot(),
+                        R.string.opened,
+                        Snackbar.LENGTH_SHORT).show();
+            } else {
+                Snackbar.make(mBinding.getRoot(),
+                        R.string.closed,
+                        Snackbar.LENGTH_SHORT).show();
+            }
+            getPreferences(MODE_PRIVATE).edit()
+                    .putBoolean(PREF_KEY_SHOW_ENTITY_MARKERS, showEntityMarkers).apply();
+            if (this.mapFragment != null) this.mapFragment.toggleEntityMarkers();
+        } else if (id == R.id.nav_map_opt_toggle_tile_entity_markers) {
+            //toggle markers;
+            showTileEntityMarkers = !showTileEntityMarkers;
+            if (showTileEntityMarkers) {
+                Snackbar.make(mBinding.getRoot(),
+                        R.string.opened,
+                        Snackbar.LENGTH_SHORT).show();
+            } else {
+                Snackbar.make(mBinding.getRoot(),
+                        R.string.closed,
+                        Snackbar.LENGTH_SHORT).show();
+            }
+            getPreferences(MODE_PRIVATE).edit()
+                    .putBoolean(PREF_KEY_SHOW_TILE_ENTITY_MARKERS, showTileEntityMarkers).apply();
+            if (this.mapFragment != null) this.mapFragment.toggleTileEntityMarkers();
+        } else if (id == R.id.nav_biomedata_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.BIOME_DATA));}
+        else if (id == R.id.nav_overworld_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.OVERWORLD));}
+        else if (id == R.id.nav_nether_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.NETHER));}
+        else if (id == R.id.nav_end_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.THEEND));}
+        else if (id == R.id.nav_villages_nbt) {changeContentFragment(() -> searchKey(World.SpecialDBEntryType.VILLAGE.keyBytes));}
+        else if (id == R.id.nav_old_villages_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.M_VILLAGES));}
+        else if (id == R.id.nav_portals_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.PORTALS));}
+        else if (id == R.id.nav_autonomous_entities_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.AUTONOMOUS_ENTITIES));}
+        else if (id == R.id.nav_map_nbt) {changeContentFragment(() -> searchKey(World.SpecialDBEntryType.MAP.keyBytes));}
+        else if (id == R.id.nav_mcstructure_nbt) {changeContentFragment(() -> searchKey(World.SpecialDBEntryType.MCSTRUCTURE.keyBytes));}
+        else if (id == R.id.nav_open_nbt_by_name) {
+            //TODO put this bit in its own method
 
+            final EditText keyEditText = new EditText(WorldActivity.this);
+            keyEditText.setEms(16);
+            keyEditText.setMaxEms(32);
+            keyEditText.setHint(R.string.leveldb_key_here);
 
-        switch (id) {
-//            case (R.id.nav_world_show_map):
-//                changeContentFragment(this::openWorldMap);
-//                break;
-//            case (R.id.nav_world_select):
-//                //close activity; back to world selection screen
-//                closeWorldActivity();
-//                break;
-            case (R.id.nav_singleplayer_nbt):
-                openPlayerEditor();
-                break;
-            case (R.id.nav_multiplayer_nbt):
-//                openMultiplayerEditor();
-                searchKey(World.SpecialDBEntryType.MULTIPLAYER.keyBytes);
-                break;
-            /*case(R.id.nav_inventory):
-                //TODO go to inventory editor
-                //This feature is planned, but not yet implemented,
-                // use the generic NBT editor for now...
-                break;*/
-            case (R.id.nav_world_nbt):
-                openLevelEditor();
-                break;
-            /*case(R.id.nav_tools):
-                //TODO open tools menu (world downloader/importer/exporter maybe?)
-                break;*/
-            case (R.id.nav_overworld_satellite):
-                changeMapType(MapType.OVERWORLD_SATELLITE, Dimension.OVERWORLD);
-                break;
-            case (R.id.nav_overworld_cave):
-                changeMapType(MapType.OVERWORLD_CAVE, Dimension.OVERWORLD);
-                break;
-            case (R.id.nav_overworld_slime_chunk):
-                changeMapType(MapType.OVERWORLD_SLIME_CHUNK, Dimension.OVERWORLD);
-                break;
-            /*case(R.id.nav_overworld_debug):
-                changeMapType(MapType.DEBUG); //for debugging tiles positions, rendering, etc.
-                break;*/
-            case (R.id.nav_overworld_heightmap):
-                changeMapType(MapType.OVERWORLD_HEIGHTMAP, Dimension.OVERWORLD);
-                break;
-            case (R.id.nav_overworld_biome):
-                changeMapType(MapType.OVERWORLD_BIOME, Dimension.OVERWORLD);
-                break;
-            case (R.id.nav_overworld_grass):
-                changeMapType(MapType.OVERWORLD_GRASS, Dimension.OVERWORLD);
-                break;
-            case (R.id.nav_overworld_xray):
-                changeMapType(MapType.OVERWORLD_XRAY, Dimension.OVERWORLD);
-                break;
-            case (R.id.nav_overworld_block_light):
-                changeMapType(MapType.OVERWORLD_BLOCK_LIGHT, Dimension.OVERWORLD);
-                break;
-            case (R.id.nav_nether_map):
-                changeMapType(MapType.NETHER, Dimension.NETHER);
-                break;
-            case (R.id.nav_nether_xray):
-                changeMapType(MapType.NETHER_XRAY, Dimension.NETHER);
-                break;
-            case (R.id.nav_nether_block_light):
-                changeMapType(MapType.NETHER_BLOCK_LIGHT, Dimension.NETHER);
-                break;
-            case (R.id.nav_nether_biome):
-                changeMapType(MapType.NETHER_BIOME, Dimension.NETHER);
-                break;
-            case (R.id.nav_end_satellite):
-                changeMapType(MapType.END_SATELLITE, Dimension.END);
-                break;
-            case (R.id.nav_end_heightmap):
-                changeMapType(MapType.END_HEIGHTMAP, Dimension.END);
-                break;
-//            case (R.id.nav_end_biome):
-//                changeMapType(MapType.END_BIOME, Dimension.END);
-//                break;
-            case (R.id.nav_end_block_light):
-                changeMapType(MapType.END_BLOCK_LIGHT, Dimension.END);
-                break;
-            case (R.id.nav_map_opt_toggle_grid):
-                //toggle the grid
-                this.showGrid = !this.showGrid;
-                //rerender tiles (tiles will render with toggled grid on it now)
-                if (this.mapFragment != null) this.mapFragment.resetTileView();
-                break;
-            case (R.id.nav_map_opt_filter_entity_markers):
-                //toggle the grid entity
-
-                this.mapFragment.openEntityMarkerFilter();
-                break;
-            case (R.id.nav_map_opt_filter_tile_entity_markers):
-                //toggle the grid tile entity
-
-                this.mapFragment.openTileEntityMarkerFilter();
-                break;
-            case (R.id.nav_map_opt_toggle_entity_markers):
-                //toggle markers;
-                showEntityMarkers = !showEntityMarkers;
-                if (showEntityMarkers) {
-                    Snackbar.make(mBinding.getRoot(),
-                                    R.string.opened,
-                                    Snackbar.LENGTH_SHORT).show();
-                } else {
-                    Snackbar.make(mBinding.getRoot(),
-                                    R.string.closed,
-                                    Snackbar.LENGTH_SHORT).show();
-                }
-                getPreferences(MODE_PRIVATE).edit()
-                        .putBoolean(PREF_KEY_SHOW_ENTITY_MARKERS, showEntityMarkers).apply();
-                if (this.mapFragment != null) this.mapFragment.toggleEntityMarkers();
-                break;
-            case (R.id.nav_map_opt_toggle_tile_entity_markers):
-                //toggle markers;
-                showTileEntityMarkers = !showTileEntityMarkers;
-                if (showTileEntityMarkers) {
-                    Snackbar.make(mBinding.getRoot(),
-                                    R.string.opened,
-                                    Snackbar.LENGTH_SHORT).show();
-                } else {
-                    Snackbar.make(mBinding.getRoot(),
-                                    R.string.closed,
-                                    Snackbar.LENGTH_SHORT).show();
-                }
-                getPreferences(MODE_PRIVATE).edit()
-                        .putBoolean(PREF_KEY_SHOW_TILE_ENTITY_MARKERS, showTileEntityMarkers).apply();
-                if (this.mapFragment != null) this.mapFragment.toggleTileEntityMarkers();
-                break;
-            case (R.id.nav_biomedata_nbt):
-                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.BIOME_DATA));
-                break;
-            case (R.id.nav_overworld_nbt):
-                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.OVERWORLD));
-                break;
-            case (R.id.nav_nether_nbt):
-                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.NETHER));
-                break;
-            case (R.id.nav_end_nbt):
-                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.THEEND));
-                break;
-            case (R.id.nav_villages_nbt):
-                changeContentFragment(() -> searchKey(World.SpecialDBEntryType.VILLAGE.keyBytes));
-                break;
-            case (R.id.nav_old_villages_nbt):
-                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.M_VILLAGES));
-                break;
-            case (R.id.nav_portals_nbt):
-                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.PORTALS));
-                break;
-//            case (R.id.nav_dimension0_nbt):
-//                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.DIMENSION_0));
-//                break;
-//            case (R.id.nav_dimension1_nbt):
-//                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.DIMENSION_1));
-//                break;
-//            case (R.id.nav_dimension2_nbt):
-//                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.DIMENSION_2));
-//                break;
-            case (R.id.nav_autonomous_entities_nbt):
-                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.AUTONOMOUS_ENTITIES));
-                break;
-            case (R.id.nav_map_nbt):
-                changeContentFragment(() -> searchKey(World.SpecialDBEntryType.MAP.keyBytes));
-                break;
-            case (R.id.nav_mcstructure_nbt):
-                changeContentFragment(() -> searchKey(World.SpecialDBEntryType.MCSTRUCTURE.keyBytes));
-                break;
-            case (R.id.nav_open_nbt_by_name): {
-
-                //TODO put this bit in its own method
-
-                final EditText keyEditText = new EditText(WorldActivity.this);
-                keyEditText.setEms(16);
-                keyEditText.setMaxEms(32);
-                keyEditText.setHint(R.string.leveldb_key_here);
-
-                new AlertDialog.Builder(WorldActivity.this)
-                        .setTitle(R.string.open_nbt_from_db)
-                        .setView(keyEditText)
-                        .setPositiveButton(R.string.search, (dialog, which) -> changeContentFragment(() -> {
-                            Editable keyNameEditable = keyEditText.getText();
-                            String keyName = keyNameEditable == null
-                                    ? null : keyNameEditable.toString();
-                            if (keyName == null || keyName.equals("")) {
-                                Snackbar.make(drawer,
-                                        R.string.invalid_keyname,
-                                        Snackbar.LENGTH_LONG)
-                                        .setAction("Action", null).show();
-                            } else {
-                                searchKey(keyName.getBytes());
+            new AlertDialog.Builder(WorldActivity.this)
+                    .setTitle(R.string.open_nbt_from_db)
+                    .setView(keyEditText)
+                    .setPositiveButton(R.string.search, (dialog, which) -> changeContentFragment(() -> {
+                        Editable keyNameEditable = keyEditText.getText();
+                        String keyName = keyNameEditable == null
+                                ? null : keyNameEditable.toString();
+                        if (keyName == null || keyName.equals("")) {
+                            Snackbar.make(drawer,
+                                            R.string.invalid_keyname,
+                                            Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                        } else {
+                            searchKey(keyName.getBytes());
 
 //                                try {
 //                                    EditableNBT dbEntry = openEditableNbtDbEntry(keyName);
@@ -578,28 +496,19 @@ public class WorldActivity extends AppCompatActivity
 //                                            Snackbar.LENGTH_LONG)
 //                                            .setAction("Action", null).show();
 //                                }
-                            }
-                        }))
-                        .setCancelable(true)
-                        .setNegativeButton(android.R.string.cancel, null)
-                        .show();
-
-                break;
-            }
-            case (R.id.nav_worldclock_nbt):
-                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.WORLDCLOCKS));
-                break;
-            case (R.id.nav_schedulerwt_nbt):
-                changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.SCHEDULERWT));
-                break;
-            case (R.id.nav_postrackdb_nbt):
-                changeContentFragment(() -> searchKey(World.SpecialDBEntryType.POSTRACKDB.keyBytes));
-                break;
-            default:
-                //Warning, we might have messed with the menu XML!
-                Log.d(this, "pressed unknown navigation-item in world-activity-drawer");
-                break;
+                        }
+                    }))
+                    .setCancelable(true)
+                    .setNegativeButton(android.R.string.cancel, null)
+                    .show();
+        } else if (id == R.id.nav_worldclock_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.WORLDCLOCKS));}
+        else if (id == R.id.nav_worldclock_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.WORLDCLOCKS));}
+        else if (id == R.id.nav_schedulerwt_nbt) {changeContentFragment(() -> openSpecialDBEntry(World.SpecialDBEntryType.SCHEDULERWT));}
+        else if (id == R.id.nav_postrackdb_nbt) {changeContentFragment(() -> searchKey(World.SpecialDBEntryType.POSTRACKDB.keyBytes));}
+        else {//Warning, we might have messed with the menu XML!
+            Log.d(this, "pressed unknown navigation-item in world-activity-drawer");
         }
+
 
         drawer.closeDrawer(GravityCompat.START);
         return true;

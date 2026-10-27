@@ -2,6 +2,7 @@ package com.qozix.tileview.widgets;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
 
 import com.qozix.tileview.geom.FloatMathHelper;
@@ -525,6 +527,7 @@ public class ZoomPanLayout extends ViewGroup implements
         return direction > 0 ? position < getScrollLimitX() : direction < 0 && position > 0;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         boolean gestureIntercept = mGestureDetector.onTouchEvent(event);
@@ -702,7 +705,7 @@ public class ZoomPanLayout extends ViewGroup implements
     }
 
     @Override
-    public boolean onDown(MotionEvent event) {
+    public boolean onDown(@NonNull MotionEvent event) {
         if (mIsFlinging && !mScroller.isFinished()) {
             mScroller.forceFinished(true);
             mIsFlinging = false;
@@ -712,7 +715,7 @@ public class ZoomPanLayout extends ViewGroup implements
     }
 
     @Override
-    public boolean onFling(MotionEvent event1, MotionEvent event2, float velocityX, float velocityY) {
+    public boolean onFling(MotionEvent event1, @NonNull MotionEvent event2, float velocityX, float velocityY) {
         mScroller.fling(getScrollX(), getScrollY(), (int) -velocityX, (int) -velocityY, 0, getScrollLimitX(), 0, getScrollLimitY());
         mIsFlinging = true;
         ViewCompat.postInvalidateOnAnimation(this);
@@ -721,12 +724,12 @@ public class ZoomPanLayout extends ViewGroup implements
     }
 
     @Override
-    public void onLongPress(MotionEvent event) {
+    public void onLongPress(@NonNull MotionEvent event) {
 
     }
 
     @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+    public boolean onScroll(MotionEvent e1, @NonNull MotionEvent e2, float distanceX, float distanceY) {
         int scrollEndX = getScrollX() + (int) distanceX;
         int scrollEndY = getScrollY() + (int) distanceY;
         scrollTo(scrollEndX, scrollEndY);
@@ -740,22 +743,22 @@ public class ZoomPanLayout extends ViewGroup implements
     }
 
     @Override
-    public void onShowPress(MotionEvent event) {
+    public void onShowPress(@NonNull MotionEvent event) {
 
     }
 
     @Override
-    public boolean onSingleTapUp(MotionEvent event) {
+    public boolean onSingleTapUp(@NonNull MotionEvent event) {
         return true;
     }
 
     @Override
-    public boolean onSingleTapConfirmed(MotionEvent event) {
+    public boolean onSingleTapConfirmed(@NonNull MotionEvent event) {
         return false;
     }
 
     @Override
-    public boolean onDoubleTap(MotionEvent event) {
+    public boolean onDoubleTap(@NonNull MotionEvent event) {
 //        float destination = (float) (Math.pow(2, Math.floor(Math.log(mScale * 2) / Math.log(2))));
 //        float effectiveDestination = mShouldLoopScale && mScale >= mMaxScale ? mMinScale : destination;
 //        destination = getConstrainedDestinationScale(effectiveDestination);
@@ -765,7 +768,7 @@ public class ZoomPanLayout extends ViewGroup implements
     }
 
     @Override
-    public boolean onDoubleTapEvent(MotionEvent event) {
+    public boolean onDoubleTapEvent(@NonNull MotionEvent event) {
         return true;
     }
 
@@ -781,14 +784,14 @@ public class ZoomPanLayout extends ViewGroup implements
     }
 
     @Override
-    public boolean onScaleBegin(ScaleGestureDetector scaleGestureDetector) {
+    public boolean onScaleBegin(@NonNull ScaleGestureDetector scaleGestureDetector) {
         mIsScaling = true;
         broadcastPinchBegin();
         return true;
     }
 
     @Override
-    public void onScaleEnd(ScaleGestureDetector scaleGestureDetector) {
+    public void onScaleEnd(@NonNull ScaleGestureDetector scaleGestureDetector) {
         mIsScaling = false;
         broadcastPinchEnd();
     }
@@ -916,7 +919,7 @@ public class ZoomPanLayout extends ViewGroup implements
         }
 
         @Override
-        public void onAnimationUpdate(ValueAnimator animation) {
+        public void onAnimationUpdate(@NonNull ValueAnimator animation) {
             ZoomPanLayout zoomPanLayout = mZoomPanLayoutWeakReference.get();
             if (zoomPanLayout != null) {
                 float progress = (float) animation.getAnimatedValue();
@@ -935,7 +938,7 @@ public class ZoomPanLayout extends ViewGroup implements
         }
 
         @Override
-        public void onAnimationStart(Animator animator) {
+        public void onAnimationStart(@NonNull Animator animator) {
             ZoomPanLayout zoomPanLayout = mZoomPanLayoutWeakReference.get();
             if (zoomPanLayout != null) {
                 if (mHasPendingZoomUpdates) {
@@ -950,7 +953,7 @@ public class ZoomPanLayout extends ViewGroup implements
         }
 
         @Override
-        public void onAnimationEnd(Animator animator) {
+        public void onAnimationEnd(@NonNull Animator animator) {
             ZoomPanLayout zoomPanLayout = mZoomPanLayoutWeakReference.get();
             if (zoomPanLayout != null) {
                 if (mHasPendingZoomUpdates) {
@@ -967,12 +970,12 @@ public class ZoomPanLayout extends ViewGroup implements
         }
 
         @Override
-        public void onAnimationCancel(Animator animator) {
+        public void onAnimationCancel(@NonNull Animator animator) {
             onAnimationEnd(animator);
         }
 
         @Override
-        public void onAnimationRepeat(Animator animator) {
+        public void onAnimationRepeat(@NonNull Animator animator) {
 
         }
 

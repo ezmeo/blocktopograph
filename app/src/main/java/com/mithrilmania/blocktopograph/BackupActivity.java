@@ -61,7 +61,7 @@ public class BackupActivity extends AppCompatActivity implements CompoundButton.
     public void onClickBackup(View view) {
         // The progress won't take long then it won't leak.
         String name = mBinding.editName.getText().toString().trim();
-        String bakName = name.equals("") ? "Backup" : name;
+        String bakName = name.isEmpty() ? "Backup" : name;
         AlertDialog dia = UiUtil.buildProgressWaitDialog(this, R.string.general_please_wait, null);
         dia.show();
         new AsyncTask<WorldBackups, Void, Boolean>() {
@@ -130,20 +130,23 @@ public class BackupActivity extends AppCompatActivity implements CompoundButton.
 
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-        switch (compoundButton.getId()) {
-            case R.id.cb_auto_backup:
-                if (b) {
-                    new AlertDialog.Builder(this)
-                            .setMessage(R.string.enable_auto_backup_note)
-                            .setTitle(R.string.enable_auto_backup_title)
-                            .setPositiveButton(android.R.string.ok, (use, less) -> mBackups.setAutoBackup(true, getString(R.string.backup_readme)))
-                            .create().show();
-                } else
-                    mBackups.setAutoBackup(false, getString(R.string.backup_readme));
-                break;
-            case R.id.cb_auto_delete:
-                mBackups.setAutoDelete(b, getString(R.string.backup_readme));
-                break;
+        int getid = compoundButton.getId();
+        if (getid == R.id.cb_auto_backup) {
+            if (b) {
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.enable_auto_backup_note)
+                        .setTitle(R.string.enable_auto_backup_title)
+                        .setPositiveButton(android.R.string.ok, (use, less) -> mBackups.setAutoBackup(true, getString(R.string.backup_readme)))
+                        .create().show();
+            } else {
+                mBackups.setAutoBackup(false, getString(R.string.backup_readme));
+            }
+        }
+        else if (getid == R.id.cb_auto_delete) {
+            mBackups.setAutoDelete(b, getString(R.string.backup_readme));
+        }
+        else {
+            throw new RuntimeException();
         }
     }
 

@@ -217,30 +217,26 @@ public class SelectionMenuFragment extends FloatPaneFragment {
             } catch (NumberFormatException e) {
                 return;
             }
-            switch (which.getId()) {
-                case R.id.from_x_text:
-                    if (mSelection.left == val) return;
-                    which.removeTextChangedListener(this);
-                    mSelection.right += val - mSelection.left;
-                    mSelection.left = val;
-                    break;
-                case R.id.from_y_text:
-                    if (mSelection.top == val) return;
-                    which.removeTextChangedListener(this);
-                    mSelection.bottom += val - mSelection.top;
-                    mSelection.top = val;
-                    break;
-                case R.id.range_w_text:
-                    if (mSelection.right - mSelection.left == val) return;
-                    which.removeTextChangedListener(this);
-                    mSelection.right = mSelection.left + val;
-                    break;
-                case R.id.range_h_text:
-                    if (mSelection.bottom - mSelection.top == val) return;
-                    which.removeTextChangedListener(this);
-                    mSelection.bottom = mSelection.top + val;
-                    break;
-            }
+            int getid = which.getId();
+            if (getid == R.id.from_x_text) {
+                if (mSelection.left == val) return;
+                which.removeTextChangedListener(this);
+                mSelection.right += val - mSelection.left;
+                mSelection.left = val;
+            } else if (getid == R.id.from_y_text) {
+                if (mSelection.top == val) return;
+                which.removeTextChangedListener(this);
+                mSelection.bottom += val - mSelection.top;
+                mSelection.top = val;
+            } else if (getid == R.id.range_w_text) {
+                if (mSelection.right - mSelection.left == val) return;
+                which.removeTextChangedListener(this);
+                mSelection.right = mSelection.left + val;
+            } else if (getid == R.id.range_h_text) {
+                if (mSelection.bottom - mSelection.top == val) return;
+                which.removeTextChangedListener(this);
+                mSelection.bottom = mSelection.top + val;
+            } else {throw new RuntimeException();}
             mBinding.content.setSelection(mSelection);
             which.addTextChangedListener(this);
         }

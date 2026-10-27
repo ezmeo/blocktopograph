@@ -6,6 +6,7 @@ import android.content.Context;
  * @deprecated In the next major version, instances of this class will be replaced
  * by instances of MarkerLayout
  */
+@Deprecated
 public class CalloutLayout extends MarkerLayout {
 
   public CalloutLayout( Context context ) {

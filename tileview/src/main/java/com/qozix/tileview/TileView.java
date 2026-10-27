@@ -15,6 +15,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+
 import com.qozix.tileview.detail.DetailLevel;
 import com.qozix.tileview.detail.DetailLevelManager;
 import com.qozix.tileview.geom.CoordinateTranslater;
@@ -330,6 +332,7 @@ public class TileView extends ZoomPanLayout implements
      * @param shouldRecycleBitmaps True if bitmaps should call Bitmap.recycle when they are removed from view.
      * @deprecated This value is no longer considered - bitmaps are always recycled when they're no longer used.
      */
+    @Deprecated
     public void setShouldRecycleBitmaps(boolean shouldRecycleBitmaps) {
         mTileCanvasViewGroup.setShouldRecycleBitmaps(shouldRecycleBitmaps);
     }
@@ -870,7 +873,7 @@ public class TileView extends ZoomPanLayout implements
     }
 
     @Override
-    public boolean onSingleTapConfirmed(MotionEvent event) {
+    public boolean onSingleTapConfirmed(@NonNull MotionEvent event) {
         int x = getScrollX() + (int) event.getX() - getOffsetX();
         int y = getScrollY() + (int) event.getY() - getOffsetY();
         if (mMarkerLayout.processHit(x, y)) return true;

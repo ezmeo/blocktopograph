@@ -5,6 +5,8 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
+import androidx.annotation.NonNull;
+
 import com.mithrilmania.blocktopograph.map.selection.SelectionView;
 import com.qozix.tileview.TileView;
 
@@ -37,7 +39,7 @@ public class MapTileView extends TileView {
     }
 
     @Override
-    public void onLongPress(MotionEvent event) {
+    public void onLongPress(@NonNull MotionEvent event) {
         if (mOnLongPressListener != null) mOnLongPressListener.onLongPressed(event);
     }
 
@@ -48,7 +50,7 @@ public class MapTileView extends TileView {
     }
 
     @Override
-    public boolean onDoubleTap(MotionEvent event) {
+    public boolean onDoubleTap(@NonNull MotionEvent event) {
         if (mOuterDoubleTapListener != null) mOuterDoubleTapListener.onDoubleTap(event);
         return true;
     }
@@ -74,7 +76,7 @@ public class MapTileView extends TileView {
     }
 
     @Override
-    public boolean onSingleTapConfirmed(MotionEvent event) {
+    public boolean onSingleTapConfirmed(@NonNull MotionEvent event) {
         if (super.onSingleTapConfirmed(event)) return true;
         if (mOnLongPressListener != null) {
             mOnLongPressListener.onLongPressed(event);

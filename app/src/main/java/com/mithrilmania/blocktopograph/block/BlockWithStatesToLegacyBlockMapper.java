@@ -4807,7 +4807,7 @@ public class BlockWithStatesToLegacyBlockMapper {
                     }
                 }
             }
-            if (rangeNew.size() > 0) range = rangeNew;
+            if (!rangeNew.isEmpty()) range = rangeNew;
         }
         return range.get(0).second;
     }

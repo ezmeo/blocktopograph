@@ -99,17 +99,10 @@ public final class MainTestActivity extends AppCompatActivity {
     private byte[] getDbKey() {
         byte[] key;
         String text = mBinding.searchBar.getText().toString();
-        switch (mBinding.rgForm.getCheckedRadioButtonId()) {
-            case R.id.rb_form_text:
-                key = text.getBytes(NBTConstants.CHARSET);
-                break;
-            case R.id.rb_form_hex: {
-                key = ConvertUtil.hexStringToBytes(text);
-                break;
-            }
-            default:
-                key = null;
-        }
+        int getbtnid = mBinding.rgForm.getCheckedRadioButtonId();
+        if (getbtnid == R.id.rb_form_text) {key = text.getBytes(NBTConstants.CHARSET);}
+        else if (getbtnid == R.id.rb_form_hex) {key = ConvertUtil.hexStringToBytes(text);}
+        else {key = null;}
         return key;
     }
 

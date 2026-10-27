@@ -536,19 +536,20 @@ public class WorldItemDetailFragment extends Fragment implements View.OnClickLis
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.button_left:
-                sequence((byte) 0);
-                break;
-            case R.id.button_right:
-                sequence((byte) 1);
-                break;
-            case R.id.button_backup:
-                startActivity(new Intent(getActivity(), BackupActivity.class).putExtra(World.ARG_WORLD_SERIALIZED, mWorld));
-                break;
+        int id = view.getId();
+        if (id == R.id.button_left) {
+            sequence((byte) 0);
         }
+        else if (id == R.id.button_right) {
+            sequence((byte) 1);
+        }
+        else if (id == R.id.button_backup) {
+            startActivity(new Intent(getActivity(), BackupActivity.class).putExtra(World.ARG_WORLD_SERIALIZED, mWorld));
+        }
+        else throw new RuntimeException();
     }
 }
 

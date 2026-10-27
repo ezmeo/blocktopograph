@@ -142,6 +142,7 @@ public class TileCanvasViewGroup extends ViewGroup {
      * @return True if tile bitmaps should be recycled.
      * @deprecated This value is no longer considered - bitmaps are always recycled when they're no longer used.
      */
+    @Deprecated
     public boolean getShouldRecycleBitmaps() {
         return mShouldRecycleBitmaps;
     }
@@ -150,6 +151,7 @@ public class TileCanvasViewGroup extends ViewGroup {
      * @param shouldRecycleBitmaps True if tile bitmaps should be recycled.
      * @deprecated This value is no longer considered - bitmaps are always recycled when they're no longer used.
      */
+    @Deprecated
     public void setShouldRecycleBitmaps(boolean shouldRecycleBitmaps) {
         mShouldRecycleBitmaps = shouldRecycleBitmaps;
     }
@@ -225,6 +227,7 @@ public class TileCanvasViewGroup extends ViewGroup {
      * @param recentlyComputedVisibleTileSet
      * @deprecated
      */
+    @Deprecated
     public void reconcile(Set<Tile> recentlyComputedVisibleTileSet) {
         // noop
     }

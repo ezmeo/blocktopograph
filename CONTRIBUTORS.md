@@ -4,7 +4,6 @@
 
 *Proto Lambda*\(Link removed as he asked to\)
 
-
 # Maintainer(s)
 
 Order by joined date.
@@ -16,7 +15,6 @@ Order by joined date.
 [@MeowCat](https://github.com/oO0oO0oO0o0o00) (Half Active)
 
 [@rukiroki](https://github.com/rukiroki) (Active)
-
 
 # Main contributors
 
@@ -32,7 +30,6 @@ Order by joined date.
 
 [@rukiroki](https://github.com/rukiroki)
 
-
 # Contributors
 
 Order by joined date.
@@ -46,5 +43,3 @@ Order by joined date.
 *Tcbdxh*
 
 And many others.
-
-

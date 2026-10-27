@@ -132,6 +132,7 @@ public class Tile {
    * @deprecated
    * @return
    */
+  @Deprecated
   public float getRendered() {
     return mProgress;
   }
@@ -139,6 +140,7 @@ public class Tile {
   /**
    * @deprecated
    */
+  @Deprecated
   public void stampTime() {
     // no op
   }

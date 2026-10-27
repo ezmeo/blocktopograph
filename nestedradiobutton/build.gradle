@@ -1,0 +1,40 @@
+apply plugin: 'com.android.library'
+
+android {
+    namespace = 'com.jbvincey.nestedradiobutton'
+    compileSdkVersion rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdkVersion rootProject.minSdkVersion
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lint {
+        disable 'ExpiredTargetSdkVersion'
+        targetSdk rootProject.targetSdkVersion
+    }
+    testOptions {
+        targetSdk rootProject.targetSdkVersion
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "androidx.appcompat:appcompat:1.7.0"
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+
+    //testImplementation 'junit:junit:4.12'
+    //testImplementation 'org.mockito:mockito-core:2.8.9'
+    //testImplementation "org.robolectric:robolectric:3.8"
+}

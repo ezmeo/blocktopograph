@@ -179,14 +179,8 @@ public class SelectionView extends FrameLayout {
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewAdded(View child) {
-        switch (child.getId()) {
-            case R.id.left:
-            case R.id.right:
-            case R.id.top:
-            case R.id.bottom:
-                child.setOnTouchListener(this::onTouch);
-                break;
-        }
+        int getid = child.getId();
+        if (getid == R.id.left || getid == R.id.right || getid == R.id.top || getid == R.id.bottom) {child.setOnTouchListener(this::onTouch);}
     }
 
     private boolean onTouch(View view, MotionEvent motionEvent) {
@@ -203,17 +197,9 @@ public class SelectionView extends FrameLayout {
         }
 
         // Set current pos.
-        switch (which) {
-            case R.id.left:
-            case R.id.right:
-                // Motion event's get x is relative to view's x. Sum 'em up.
-                mDragCurrentPos = view.getX() + motionEvent.getX();
-                break;
-            case R.id.top:
-            case R.id.bottom:
-                mDragCurrentPos = view.getY() + motionEvent.getY();
-                break;
-        }
+        if (which == R.id.left || which == R.id.right) {// Motion event's get x is relative to view's x. Sum 'em up.
+            mDragCurrentPos = view.getX() + motionEvent.getX();
+        } else if (which == R.id.top || which == R.id.bottom) {mDragCurrentPos = view.getY() + motionEvent.getY();}
 
         switch (motionEvent.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
@@ -225,35 +211,21 @@ public class SelectionView extends FrameLayout {
                 View actionIcon = getChildAt(4);
                 actionIcon.setVisibility(VISIBLE);
 
-                switch (which) {
-                    case R.id.left:
-                        actionIcon.setRotation(270.0f);
-                        break;
-                    case R.id.right:
-                        actionIcon.setRotation(90.0f);
-                        break;
-                    case R.id.top:
-                        actionIcon.setRotation(0.0f);
-                        break;
-                    case R.id.bottom:
-                        actionIcon.setRotation(180.0f);
-                        break;
-                }
+                if (which == R.id.left) {actionIcon.setRotation(270.0f);}
+                else if (which == R.id.right) {actionIcon.setRotation(90.0f);}
+                else if (which == R.id.top) {actionIcon.setRotation(0.0f);}
+                else if (which == R.id.bottom) {actionIcon.setRotation(180.0f);}
 
                 // Prevents tileView being touched while dragging.
                 tileView.setTouchable(false);
 
                 // Set current dragging item.
                 mDragger = view;
-                switch (which) {
-                    case R.id.left:
-                    case R.id.right:
-                        mDragBeginPosCorr = motionEvent.getX();// - view.getX();
-                        break;
-                    case R.id.top:
-                    case R.id.bottom:
-                        mDragBeginPosCorr = motionEvent.getY();// - view.getY();
-                        break;
+                if (which == R.id.left || which == R.id.right) {
+                    mDragBeginPosCorr = motionEvent.getX();// - view.getX();
+                }
+                else if (which == R.id.top || which == R.id.bottom) {
+                    mDragBeginPosCorr = motionEvent.getY();// - view.getY();
                 }
                 mDragAccumulation = 0.0f;
                 mDragDirection = 0;
@@ -305,20 +277,12 @@ public class SelectionView extends FrameLayout {
 
         // Retrieve view position then get the distance and screen size.
         int draggerId = mDragger.getId();
-        switch (draggerId) {
-            case R.id.left:
-            case R.id.right:
-                // `dragged.getX() - mDragBeginPosCorr` is the current position of user's initially
-                // touched point of the View.
-                distOnScreen = mDragCurrentPos - mDragger.getX() - mDragBeginPosCorr;
-                break;
-            case R.id.top:
-            case R.id.bottom:
-                distOnScreen = mDragCurrentPos - mDragger.getY() - mDragBeginPosCorr;
-                break;
-            default:
-                return;
-        }
+        if (draggerId == R.id.left || draggerId == R.id.right) {
+            // `dragged.getX() - mDragBeginPosCorr` is the current position of user's initially
+            // touched point of the View.
+            distOnScreen = mDragCurrentPos - mDragger.getX() - mDragBeginPosCorr;
+        } else if (draggerId == R.id.top || draggerId == R.id.bottom) {distOnScreen = mDragCurrentPos - mDragger.getY() - mDragBeginPosCorr;}
+        else {return;}
 
         flow:
         {
@@ -360,31 +324,29 @@ public class SelectionView extends FrameLayout {
 
             // Alter selection.
             // Selection shall be at least 1x1.
-            switch (draggerId) {
-                case R.id.left:
-                    if (mSelectionRect.left + distanceInBlocks >= mSelectionRect.right) {
-                        mSelectionRect.left = mSelectionRect.right - 1;
-                        distanceInBlocks = 0;
-                    } else mSelectionRect.left += distanceInBlocks;
-                    break;
-                case R.id.right:
-                    if (mSelectionRect.right + distanceInBlocks <= mSelectionRect.left) {
-                        mSelectionRect.right = mSelectionRect.left + 1;
-                        distanceInBlocks = 0;
-                    } else mSelectionRect.right += distanceInBlocks;
-                    break;
-                case R.id.top:
-                    if (mSelectionRect.top + distanceInBlocks >= mSelectionRect.bottom) {
-                        mSelectionRect.top = mSelectionRect.bottom - 1;
-                        distanceInBlocks = 0;
-                    } else mSelectionRect.top += distanceInBlocks;
-                    break;
-                case R.id.bottom:
-                    if (mSelectionRect.bottom + distanceInBlocks <= mSelectionRect.top) {
-                        mSelectionRect.bottom = mSelectionRect.top + 1;
-                        distanceInBlocks = 0;
-                    } else mSelectionRect.bottom += distanceInBlocks;
-                    break;
+            if (draggerId== R.id.left) {
+                if (mSelectionRect.left + distanceInBlocks >= mSelectionRect.right) {
+                    mSelectionRect.left = mSelectionRect.right - 1;
+                    distanceInBlocks = 0;
+                } else mSelectionRect.left += distanceInBlocks;
+            }
+            else if (draggerId == R.id.right) {
+                if (mSelectionRect.right + distanceInBlocks <= mSelectionRect.left) {
+                    mSelectionRect.right = mSelectionRect.left + 1;
+                    distanceInBlocks = 0;
+                } else mSelectionRect.right += distanceInBlocks;
+            }
+            else if (draggerId == R.id.top) {
+                if (mSelectionRect.top + distanceInBlocks >= mSelectionRect.bottom) {
+                    mSelectionRect.top = mSelectionRect.bottom - 1;
+                    distanceInBlocks = 0;
+                } else mSelectionRect.top += distanceInBlocks;
+            }
+            else if (draggerId == R.id.bottom) {
+                if (mSelectionRect.bottom + distanceInBlocks <= mSelectionRect.top) {
+                    mSelectionRect.bottom = mSelectionRect.top + 1;
+                    distanceInBlocks = 0;
+                } else mSelectionRect.bottom += distanceInBlocks;
             }
 
             // If no movement, return.
@@ -405,27 +367,23 @@ public class SelectionView extends FrameLayout {
             int minw = Math.max(MIN_DIST_TO_SCREEN_BOUND, sw / 8);
             int minh = Math.max(MIN_DIST_TO_SCREEN_BOUND, sh / 8);
 
-            switch (draggerId) {
-                case R.id.left:
-                case R.id.right:
-                    // (Moving right and near right bound) or
-                    // (Moving left and near left bound)
-                    if (mDragDirection > 0 && sw - mDragCurrentPos < minw
-                            || (mDragDirection < 0 && mDragCurrentPos < minw)
-                    )
-                        tileView.setScrollX((int) (tileView.getScrollX() + movement));
-                    else
-                        requestLayout();
-                    break;
-                case R.id.top:
-                case R.id.bottom:
-                    if (mDragDirection > 0 && sh - mDragCurrentPos < minh
-                            || (mDragDirection < 0 && mDragCurrentPos < minh)
-                    )
-                        tileView.setScrollY((int) (tileView.getScrollY() + movement));
-                    else
-                        requestLayout();
-                    break;
+            if (draggerId == R.id.left || draggerId == R.id.right) {
+                // (Moving right and near right bound) or
+                // (Moving left and near left bound)
+                if (mDragDirection > 0 && sw - mDragCurrentPos < minw
+                        || (mDragDirection < 0 && mDragCurrentPos < minw)
+                )
+                    tileView.setScrollX((int) (tileView.getScrollX() + movement));
+                else
+                    requestLayout();
+            }
+            else if (draggerId == R.id.top || draggerId == R.id.bottom) {
+                if (mDragDirection > 0 && sh - mDragCurrentPos < minh
+                        || (mDragDirection < 0 && mDragCurrentPos < minh)
+                )
+                    tileView.setScrollY((int) (tileView.getScrollY() + movement));
+                else
+                    requestLayout();
             }
         }
 

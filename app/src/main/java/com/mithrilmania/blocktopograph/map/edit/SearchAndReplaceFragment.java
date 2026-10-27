@@ -279,26 +279,18 @@ public class SearchAndReplaceFragment extends DialogFragment {
     }
 
     private void onCheckedChanged(@NonNull NestedRadioGroupManager group, @IdRes int checkedId) {
-        switch (checkedId) {
-            case R.id.rb_search_both:
-                mBinding.frameSearchTwo.setVisibility(View.VISIBLE);
-                mBinding.frameSearchOne.setVisibility(View.GONE);
-                break;
-            case R.id.rb_search_bg:
-            case R.id.rb_search_fg:
-            case R.id.rb_search_or:
-                mBinding.frameSearchTwo.setVisibility(View.GONE);
-                mBinding.frameSearchOne.setVisibility(View.VISIBLE);
-                break;
-            case R.id.rb_place_both:
-                mBinding.framePlaceTwo.setVisibility(View.VISIBLE);
-                mBinding.framePlaceOne.setVisibility(View.GONE);
-                break;
-            case R.id.rb_place_bg:
-            case R.id.rb_place_fg:
-                mBinding.framePlaceTwo.setVisibility(View.GONE);
-                mBinding.framePlaceOne.setVisibility(View.VISIBLE);
-                break;
+        if (checkedId == R.id.rb_search_both) {
+            mBinding.frameSearchTwo.setVisibility(View.VISIBLE);
+            mBinding.frameSearchOne.setVisibility(View.GONE);
+        } else if (checkedId == R.id.rb_search_bg || checkedId == R.id.rb_search_fg || checkedId == R.id.rb_search_or) {
+            mBinding.frameSearchTwo.setVisibility(View.GONE);
+            mBinding.frameSearchOne.setVisibility(View.VISIBLE);
+        } else if (checkedId == R.id.rb_place_both) {
+            mBinding.framePlaceTwo.setVisibility(View.VISIBLE);
+            mBinding.framePlaceOne.setVisibility(View.GONE);
+        } else if (checkedId == R.id.rb_place_bg || checkedId == R.id.rb_place_fg) {
+            mBinding.framePlaceTwo.setVisibility(View.GONE);
+            mBinding.framePlaceOne.setVisibility(View.VISIBLE);
         }
     }
 }

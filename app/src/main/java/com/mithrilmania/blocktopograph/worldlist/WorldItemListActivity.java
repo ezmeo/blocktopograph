@@ -1,5 +1,7 @@
 package com.mithrilmania.blocktopograph.worldlist;
 
+import static com.mithrilmania.blocktopograph.R.*;
+
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -208,30 +210,28 @@ public class WorldItemListActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_EXTERNAL_STORAGE: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length == PERMISSIONS_STORAGE.length && checkPermissions(grantResults)) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_EXTERNAL_STORAGE) {// If request is cancelled, the result arrays are empty.
+            if (grantResults.length == PERMISSIONS_STORAGE.length && checkPermissions(grantResults)) {
 
-                    // permission was granted, yay!
-                    this.worldItemAdapter.enable();
+                // permission was granted, yay!
+                this.worldItemAdapter.enable();
 
-                } else {
+            } else {
 
-                    // permission denied, boo! Disable the
-                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                    TextView msg = new TextView(this);
-                    float dpi = this.getResources().getDisplayMetrics().density;
-                    msg.setPadding((int) (19 * dpi), (int) (5 * dpi), (int) (14 * dpi), (int) (5 * dpi));
-                    msg.setMaxLines(20);
-                    msg.setMovementMethod(LinkMovementMethod.getInstance());
-                    msg.setText(R.string.no_sdcard_access);
-                    builder.setView(msg)
-                            .setTitle(R.string.action_help)
-                            .setCancelable(true)
-                            .setNeutralButton(android.R.string.ok, null)
-                            .show();
-                }
+                // permission denied, boo! Disable the
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                TextView msg = new TextView(this);
+                float dpi = this.getResources().getDisplayMetrics().density;
+                msg.setPadding((int) (19 * dpi), (int) (5 * dpi), (int) (14 * dpi), (int) (5 * dpi));
+                msg.setMaxLines(20);
+                msg.setMovementMethod(LinkMovementMethod.getInstance());
+                msg.setText(string.no_sdcard_access);
+                builder.setView(msg)
+                        .setTitle(string.action_help)
+                        .setCancelable(true)
+                        .setNeutralButton(android.R.string.ok, null)
+                        .show();
             }
         }
     }
@@ -247,29 +247,18 @@ public class WorldItemListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
 
         Bundle params = new Bundle();
-        int type;
-        switch (item.getItemId()) {
-            case R.id.action_open:
-                type = Log.ANA_PARAM_MAINACT_MENU_TYPE_OPEN;
-                break;
-            case R.id.action_help:
-                type = Log.ANA_PARAM_MAINACT_MENU_TYPE_HELP;
-                break;
-            case R.id.action_about:
-                type = Log.ANA_PARAM_MAINACT_MENU_TYPE_ABOUT;
-                break;
-            case R.id.action_add_world_list:
-                type = Log.ANA_PARAM_MAINACT_MENU_ADD_OPEN;
-                break;
-            default:
-                type = 0;
-        }
+        int type,getid = item.getItemId();
+        if (getid == R.id.action_open) {type = Log.ANA_PARAM_MAINACT_MENU_TYPE_OPEN;}
+        else if (getid == R.id.action_help) {type = Log.ANA_PARAM_MAINACT_MENU_TYPE_HELP;}
+        else if (getid == R.id.action_about) {type = Log.ANA_PARAM_MAINACT_MENU_TYPE_ABOUT;}
+        else if (getid == id.action_add_world_list) {type = Log.ANA_PARAM_MAINACT_MENU_ADD_OPEN;}
+        else {type = 0;}
         params.putInt(Log.ANA_PARAM_MAINACT_MENU_TYPE, type);
         Log.logFirebaseEvent(this, Log.CustomFirebaseEvent.MAINACT_MENU_OPEN, params);
 
         //some text pop-up dialogs, some with simple HTML tags.
-        switch (item.getItemId()) {
-            case R.id.action_add_world_list: {
+        int getid2 = item.getItemId();
+        if (getid2 == R.id.action_add_world_list) {
                 final EditText listPathText = new EditText(WorldItemListActivity.this);
                 listPathText.setHint(R.string.storage_path_here);
                 final EditText remarkText = new EditText(WorldItemListActivity.this);
@@ -329,7 +318,7 @@ public class WorldItemListActivity extends AppCompatActivity {
                         }).show();
                 return true;
             }
-            case R.id.action_open: {
+            else if (getid2 == R.id.action_open) {
                 if (worldItemAdapter.isDisabled()) {
                     Snackbar.make(getWindow().getDecorView(), R.string.no_read_write_access, Snackbar.LENGTH_SHORT).show();
                     return true;
@@ -416,7 +405,7 @@ public class WorldItemListActivity extends AppCompatActivity {
                 //Then it also cannot find a world. --rbq2012.
                 return true;
             }
-            case R.id.action_about: {
+            else if (getid2 == R.id.action_about) {
 
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
                 TextView msg = new TextView(this);
@@ -434,7 +423,7 @@ public class WorldItemListActivity extends AppCompatActivity {
 
                 return true;
             }
-            case R.id.action_help: {
+            else if (getid2 == R.id.action_help) {
                 android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
                 TextView msg = new TextView(this);
                 float dpi = getResources().getDisplayMetrics().density;
@@ -450,7 +439,7 @@ public class WorldItemListActivity extends AppCompatActivity {
 
                 return true;
             }
-//            case R.id.action_changelog: {
+//          else if (getid2 == R.id.action_changelog) {
 //                AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
 //                TextView msg = new TextView(ctx);
 //                float dpi = ctx.getResources().getDisplayMetrics().density;
@@ -467,11 +456,11 @@ public class WorldItemListActivity extends AppCompatActivity {
 //                        .show();
 //
 //                return true;
-//            }
-            default: {
+//          }
+            else {
                 return false;
             }
-        }
+
     }
 
     @Override
